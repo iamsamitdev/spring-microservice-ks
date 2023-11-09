@@ -1,0 +1,31 @@
+server:
+    port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/employee-service/**
+          filters:
+            - StripPrefix=1
+        - id: department-service
+          uri: lb://department-service
+          predicates:
+            - Path=/department-service/**
+          filters:
+            - StripPrefix=1
+        - id: organization-service
+          uri: lb://organization-service
+          predicates:
+            - Path=/organization-service/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:9001/eureka/

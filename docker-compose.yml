@@ -6,6 +6,8 @@ networks:
     driver: bridge
 
 services:
+
+  # MySQL db for employee-service
   mysqldb-employee:
     image: mysql:8.2
     container_name: employee_mysql_db
@@ -21,6 +23,62 @@ services:
     restart: always
     networks:
       - web_network
+
+  # PostgreSQL db for department-service
+  postgresdb-department:
+    image: postgres:13.12
+    container_name: department_postgres_db
+    volumes:
+      - ./department-service/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=department_db
+    ports:
+      - "5442:5432"
+    restart: always
+    networks:
+      - web_network
+
+  # Oracle db for organization-service
+  oracledb-organization:
+      image: iamsamitdev/oracle-macos-silicon:1.0
+      container_name: organization_oracle_db
+      environment:
+        - ORACLE_SID=ORCLCDB
+        - ORACLE_PASSWORD=Samit!=377040
+        - ORACLE_LISTENER_PORT=1521
+      ports:
+      - "1621:1521"
+      restart: always
+      networks:
+      - web_network
+
+  # Organization service
+  organization-service:
+      build: ./organization-service/.
+      container_name: organization_service
+      ports:
+      - "9093:8083"
+      depends_on:
+      - oracledb-organization
+      restart: always
+      networks:
+      - web_network
+
+  # Department service
+  department-service:
+    build: ./department-service/.
+    container_name: department_service
+    ports:
+      - "9092:8082"
+    depends_on:
+      - postgresdb-department
+    restart: always
+    networks:
+      - web_network
+
+  # Employee service
   employee-service:
     build: ./employee-service/.
     container_name: employee_service
@@ -30,4 +88,24 @@ services:
       - mysqldb-employee
     restart: always
     networks:
+      - web_network
+
+  # Eureka service
+  discovery-service:
+    build: ./discovery/.
+    container_name: discovery_service
+    ports:
+      - "9001:9001"
+    restart: always
+    networks:
+      - web_network
+
+  # Gateway service
+  gateway-service:
+      build: ./gateway/.
+      container_name: gateway_service
+      ports:
+      - "8000:8080"
+      restart: always
+      networks:
       - web_network

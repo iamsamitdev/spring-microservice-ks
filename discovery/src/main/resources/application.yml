@@ -1,0 +1,12 @@
+server:
+  port: 9001
+
+eureka:
+  instance:
+    hostname: localhost # ชื่อ host ของ service นี้
+  client:
+    register-with-eureka: false # สั่งให้ Eureka Server ไม่ Register ตัวเอง
+    fetch-registry: false # สั่งให้ Eureka Server ไม่ Fetch ข้อมูลจากตัวเอง
+    service-url:
+      # กำหนด URL ของ Eureka Server
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
