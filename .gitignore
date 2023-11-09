@@ -1,0 +1,5 @@
+.idea
+employee-service/target/*
+employee-service/.mvn/wrapper/maven-wrapper.jar
+employee-service/.mvn/wrapper/maven-wrapper.properties
+employee-service/.mvn/wrapper/MavenWrapperDownloader.java

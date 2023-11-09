@@ -1,0 +1,33 @@
+version: '3.9'
+
+networks:
+  web_network:
+    name: microservice_network
+    driver: bridge
+
+services:
+  mysqldb-employee:
+    image: mysql:8.2
+    container_name: employee_mysql_db
+    volumes:
+      - ./employee-service/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=employee_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=12345678
+    ports:
+      - "3307:3306"
+    restart: always
+    networks:
+      - web_network
+  employee-service:
+    build: ./employee-service/.
+    container_name: employee_service
+    ports:
+      - "9091:8081"
+    depends_on:
+      - mysqldb-employee
+    restart: always
+    networks:
+      - web_network
