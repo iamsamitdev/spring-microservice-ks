@@ -1,0 +1,18 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        # git:
+          # uri: file://${user.home}/application-config
+        native:
+          search-locations: file://src/main/resources/config/employee-service.yml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:9001/eureka/

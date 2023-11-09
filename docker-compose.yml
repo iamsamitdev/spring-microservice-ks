@@ -109,3 +109,13 @@ services:
       restart: always
       networks:
       - web_network
+
+  # Config service
+  config-service:
+      build: ./config/.
+      container_name: config_service
+      ports:
+      - "9002:9002"
+      restart: always
+      networks:
+      - web_network
