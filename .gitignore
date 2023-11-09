@@ -4,6 +4,10 @@ employee-service/.mvn/wrapper/maven-wrapper.jar
 employee-service/.mvn/wrapper/maven-wrapper.properties
 employee-service/.mvn/wrapper/MavenWrapperDownloader.java
 
+config-server/target/*
+config-server/.mvn/wrapper/maven-wrapper.jar
+config-server/.mvn/wrapper/maven-wrapper.properties
+
 department-service/target/*
 department-service/.mvn/wrapper/maven-wrapper.jar
 department-service/.mvn/wrapper/maven-wrapper.properties
