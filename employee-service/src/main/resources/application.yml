@@ -4,6 +4,20 @@ server:
 spring:
   application:
     name: employee-service
+  datasource:
+    url: jdbc:mysql://mysqldb-employee:3306/employee_db?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=yes&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        default_schema: employee_db
   config:
     import: "optional:configserver:http://config-service:9002"
   cloud:
@@ -12,6 +26,17 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
+
+  zipkin:
+    base-url: http://zipkin-service:9411/
+    sender:
+      type: web
+
+# zipkin server
+management:
+  tracing:
+    sampling:
+      probability: 1.0
 
 eureka:
   client:

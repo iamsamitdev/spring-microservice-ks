@@ -11,20 +11,31 @@ spring:
           uri: lb://employee-service
           predicates:
             - Path=/employee-service/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - StripPrefix=1
         - id: department-service
           uri: lb://department-service
           predicates:
             - Path=/department-service/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - StripPrefix=1
         - id: organization-service
           uri: lb://organization-service
           predicates:
             - Path=/organization-service/**
+            - Method=GET,POST,PUT,DELETE
           filters:
             - StripPrefix=1
+
+# zipkin server
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+# Eureka service
 eureka:
   client:
     service-url:
