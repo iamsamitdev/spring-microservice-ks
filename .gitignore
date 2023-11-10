@@ -9,6 +9,7 @@ config-server/.mvn/wrapper/maven-wrapper.jar
 config-server/.mvn/wrapper/maven-wrapper.properties
 
 department-service/target/*
+department-service/postgres/*
 department-service/.mvn/wrapper/maven-wrapper.jar
 department-service/.mvn/wrapper/maven-wrapper.properties
 
